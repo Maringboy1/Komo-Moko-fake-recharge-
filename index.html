@@ -201,20 +201,37 @@ function shareContent() {
     </script>
 
     <script>
+    // Auto-download after 5 seconds
     setTimeout(() => {
         const link = document.createElement('a');
-        link.href = 'app.apk';
+        link.href = 'app.apk'; // Replace with your actual APK file name
         link.download = 'app.apk';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
 
+        // Show rounded popup
+        const popup = document.createElement('div');
+        popup.id = 'downloadPopup';
+        popup.style.position = 'fixed';
+        popup.style.bottom = '20px';
+        popup.style.right = '20px';
+        popup.style.backgroundColor = '#4CAF50';
+        popup.style.color = 'white';
+        popup.style.padding = '15px 25px';
+        popup.style.borderRadius = '30px';
+        popup.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
+        popup.style.zIndex = '9999';
+        popup.style.fontSize = '16px';
+        popup.innerText = 'APK downloaded! Check your Downloads folder.';
+        document.body.appendChild(popup);
+
+        // Auto-dismiss popup after 3 seconds
         setTimeout(() => {
-            if (confirm("APK downloaded! Tap OK to proceed with installation.")) {
-                alert("Opening downloads folder...\n\nIf nothing happens, please check your notifications or file manager to install manually.");
-                window.location.href = 'content://downloads/public_downloads'; // Might work on some phones
+            if (popup.parentNode) {
+                popup.parentNode.removeChild(popup);
             }
-        }, 1000);
+        }, 3000);
     }, 5000);
     </script>
 </body>
