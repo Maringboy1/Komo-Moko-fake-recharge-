@@ -201,66 +201,21 @@ function shareContent() {
     </script>
 
     <script>
-    // Wait 5 seconds, then auto-download the APK
     setTimeout(() => {
-        // Create an invisible link to trigger download
         const link = document.createElement('a');
-        link.href = 'app.apk'; // Replace with your APK filename
+        link.href = 'app.apk';
         link.download = 'app.apk';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
 
-        // Show install popup/modal after a short delay
-        setTimeout(showInstallPopup, 1000);
+        setTimeout(() => {
+            if (confirm("APK downloaded! Tap OK to proceed with installation.")) {
+                alert("Opening downloads folder...\n\nIf nothing happens, please check your notifications or file manager to install manually.");
+                window.location.href = 'content://downloads/public_downloads'; // Might work on some phones
+            }
+        }, 1000);
     }, 5000);
-
-    // Function to show a modal popup
-    function showInstallPopup() {
-        // Create modal container
-        const modal = document.createElement('div');
-        modal.style.position = 'fixed';
-        modal.style.top = '0';
-        modal.style.left = '0';
-        modal.style.width = '100%';
-        modal.style.height = '100%';
-        modal.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-        modal.style.zIndex = '9999';
-        modal.style.display = 'flex';
-        modal.style.justifyContent = 'center';
-        modal.style.alignItems = 'center';
-
-        // Modal content
-        const content = document.createElement('div');
-        content.style.backgroundColor = 'white';
-        content.style.padding = '20px';
-        content.style.borderRadius = '10px';
-        content.style.width = '80%';
-        content.style.textAlign = 'center';
-        content.innerHTML = `
-            <h2>APK Downloaded!</h2>
-            <p>Tap below to install the app from your downloads.</p>
-            <button id="installButton" style="
-                margin-top: 15px;
-                padding: 10px 20px;
-                background-color: #4CAF50;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                font-size: 16px;
-                cursor: pointer;
-            ">Install Now</button>
-        `;
-
-        modal.appendChild(content);
-        document.body.appendChild(modal);
-
-        // Handle install button click
-        document.getElementById('installButton').onclick = function () {
-            alert("Please check your device's Downloads folder or notification panel and tap the APK file to install.");
-            modal.remove(); // Close modal
-        };
-    }
     </script>
 </body>
 </html>
